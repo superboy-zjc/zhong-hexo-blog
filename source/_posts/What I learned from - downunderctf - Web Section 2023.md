@@ -1,7 +1,12 @@
 ---
 title: What I learned from - downunderctf 2023- Web Section 
 date: 2023-09-03 18:25:56
-tags: ctf, downunderctf
+cover_image: https://api.2h0ng.wiki:443/noteimages/2023/09/02/image-20230902190236092.png
+cover_image_alt: About Comments
+categories: Writeup
+tags:
+  - ctf 
+  - downunderctf
 ---
 
 # Smooth Jazz
