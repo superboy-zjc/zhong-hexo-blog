@@ -1,0 +1,43 @@
+# Contributors: @MrWillCom , @aeilot
+# Created by Louis Aeilot on 2020/8/21. (GitHub: @aeilot)
+# Improved by Mr. Will on 2020/8/21. (GitHub: @MrWillCom)
+
+name: "Hexo Blog Builder"
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: "Hexo Blog Build"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Clone Submodule
+        run: git submodule init && git submodule update
+      - name: Install Dependencies
+        run: npm install
+      - name: Clean Previous Build
+        run: rm -rf docs
+      - name: Hexo Clean
+        run: npm run clean
+      - name: Generate New Build
+        run: npm run build
+      - name: Move docs/ to public/
+        run: mv public docs
+      - name: Publish
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.name "Hexo Deploy Bot"
+          git config --global user.email "nobody@nobody.nobody"
+          git config --global core.quotepath false
+          git add --all
+          git commit -m "Hexo Blog Build"
+          git push origin master
