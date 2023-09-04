@@ -60,7 +60,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
       - `%[argnum$][flags][width][.precision][specifier]`
 
-        - Example: **[%](starting symbol)** **[1$](match the first value from values)** **['a](replace pad symbol(blank) with (char))** **[s](specifier, determin the data type)**
+        - Example: `%1$'as`
 
           > **%**: starting symbol
           >
